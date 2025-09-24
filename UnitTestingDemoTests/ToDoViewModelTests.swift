@@ -5,8 +5,21 @@
 //  Created by Durvesh Manjhi on 24/09/25.
 //
 
+
 import XCTest
 @testable import UnitTestingDemo
+
+
+class MockToDoService: ToDoServiceProtocol {
+    func fetchTask() -> [UnitTestingDemo.ToDoModel] {
+        return [
+            ToDoModel(name: "Mock Task")
+        ]
+    }
+
+}
+
+
 final class ToDoViewModelTests: XCTestCase {
 
     private var sut: ToDoViewModel!
@@ -14,7 +27,7 @@ final class ToDoViewModelTests: XCTestCase {
     override func setUp() {
         //initial method called
         super.setUp()
-        sut = ToDoViewModel()
+        sut = ToDoViewModel(service: MockToDoService())
     }
     
     override func tearDown() {
@@ -49,6 +62,20 @@ final class ToDoViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.tasks.count, count )
         //XCTAssertEqual(sut.tasks.last?.name, "" )
+        
+    }
+    
+    func test_vm_mock_data(){
+        
+        //arrange
+        let mock = MockToDoService()
+        let service = ToDoViewModel(service: mock)
+        //act
+        
+        //assert
+        
+        XCTAssertEqual(sut.tasks.count, 1)
+        XCTAssertEqual(sut.tasks.last?.name, service.tasks.last?.name)
         
     }
     

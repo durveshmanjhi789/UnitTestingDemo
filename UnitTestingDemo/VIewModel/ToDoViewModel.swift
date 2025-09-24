@@ -4,13 +4,18 @@
 //
 //  Created by Durvesh Manjhi on 24/09/25.
 //
-import SwiftUI
+
+
+import Combine
 class ToDoViewModel:ObservableObject{
+    private var service:ToDoServiceProtocol
+    @Published var tasks:[ToDoModel] = []
     
-    @Published var tasks:[ToDoModel] = [
-        ToDoModel(name: "durvesh"),
-        ToDoModel(name: "kamal")
-    ]
+    init(service: ToDoServiceProtocol) {
+        self.service = service
+        self.tasks = service.fetchTask()
+    }
+    
     
     func addTask(_ name:String){
         guard !name.isEmpty else { return }

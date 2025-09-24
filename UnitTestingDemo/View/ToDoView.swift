@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ToDoView:View{
-    @StateObject private var vm = ToDoViewModel()
+    @StateObject private var vm = ToDoViewModel(service: ToDoFactoryMethod())
     @State private var nameInput:String = ""
     var body:some View{
         VStack{
@@ -22,7 +22,6 @@ struct ToDoView:View{
                     .textFieldStyle(.roundedBorder)
                     .padding()
                 
-                
                 Button{
                     vm.addTask(nameInput)
                     nameInput = ""
@@ -30,7 +29,6 @@ struct ToDoView:View{
                     Text("Add Name")
                 }
                 .padding()
-                
             }
         }
     }
