@@ -15,7 +15,7 @@ struct ToDoView:View{
         VStack{
             List(vm.tasks){item in
                 Text(item.name)
-                   
+                
             }
             HStack{
                 TextField("Enter Name", text: $nameInput)
@@ -29,7 +29,27 @@ struct ToDoView:View{
                     Text("Add Name")
                 }
                 .padding()
+                
             }
+            ScrollView{
+                VStack{
+                    Text("timer start run loop default : \(vm.timer)")
+                    Text("timer start run loop common : \(vm.timerCommon)")
+                        
+                }
+                Group{
+                    if let data = vm.imageData,let uiimage = UIImage(data: data) {
+                        Image(uiImage:uiimage)
+                            .resizable()
+                            .scaledToFit()
+                            .aspectRatio(contentMode: .fit)
+                    }else if vm.isLoading{
+                        ProgressView()
+                    }
+                }
+            }
+          
+          
         }
     }
 }
